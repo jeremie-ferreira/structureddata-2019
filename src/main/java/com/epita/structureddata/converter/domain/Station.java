@@ -7,7 +7,7 @@ public class Station {
 	private Boolean voyageurs;
 	private Integer codeLigne;
 	private Integer rang;
-	private Integer pk;
+	private String pk;
 	private String commune;
 	private String departement;
 	private Integer idreseau;
@@ -50,10 +50,10 @@ public class Station {
 	public void setRang(Integer rang) {
 		this.rang = rang;
 	}
-	public Integer getPk() {
+	public String getPk() {
 		return pk;
 	}
-	public void setPk(Integer pk) {
+	public void setPk(String pk) {
 		this.pk = pk;
 	}
 	public String getCommune() {

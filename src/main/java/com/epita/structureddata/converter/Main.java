@@ -9,13 +9,41 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.epita.structureddata.converter.domain.Station;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 public class Main {
 	
 	private final static String DELIMITER = ";";
 
 	public static void main(String[] args) throws IOException {
-		List<Station> stations = readData("C:\\work\\epita\\data\\liste-des-gares.csv");
+		// List<Station> stations = readData("C:\\work\\epita\\data\\liste-des-gares.csv");
+		
+		Gson gson = new Gson();
+		
+		File file = new File("C:\\work\\epita\\data\\liste-des-gares.json");
+		
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		
+		String json = reader.readLine();
+		
+		JsonArray array = new JsonParser().parse(json).getAsJsonArray();
+		for (int i = 0; i < array.size(); ++i) {
+			System.out.println(i);
+			JsonObject obj = array.get(i).getAsJsonObject();
+			JsonObject jsonStation = obj.get("fields").getAsJsonObject();
+			//System.out.println(jsonStation.get("departement"));
+			
+			Station station = gson.fromJson(jsonStation, Station.class);
+			
+			System.out.println(station.getCommune());
+			
+		}
+		
+		gson.fromJson(json, Station.class);
 		
 	}
 	
@@ -42,7 +70,7 @@ public class Main {
 			station.setVoyageurs(stringToBool(data[3]));
 			station.setCodeLigne(Integer.parseInt(data[4]));
 			station.setRang(Integer.parseInt(data[5]));
-			station.setPk(stringToPk(data[6]));
+			station.setPk(data[6]);
 			
 			stations.add(station);
 
